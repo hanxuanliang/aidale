@@ -106,7 +106,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 - **[架构指南](./ARCHITECTURE.md)** - 详细的架构说明和扩展指南
 - **[重构报告](./REFACTORING_COMPLETE.md)** - 完整的重构文档
-- **[使用指南](./USAGE_GUIDE.md)** - 高级使用模式
 
 ## 🏗️ 架构概览
 

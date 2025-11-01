@@ -1,0 +1,62 @@
+[package]
+name = "aidale"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+description = "Aidale - Elegant Rust AI SDK inspired by OpenDAL"
+keywords = ["ai", "llm", "openai", "sdk", "async"]
+categories = ["api-bindings", "asynchronous"]
+
+[dependencies]
+# Core is always included
+aidale-core = { path = "../aidale-core", version = "0.1.0" }
+
+# Optional provider crate
+aidale-provider = { path = "../aidale-provider", version = "0.1.0", optional = true }
+
+# Optional layer crate
+aidale-layer = { path = "../aidale-layer", version = "0.1.0", optional = true }
+
+# Optional plugin crate
+aidale-plugin = { path = "../aidale-plugin", version = "0.1.0", optional = true }
+
+# Optional schema generation
+schemars = { workspace = true, optional = true }
+
+[features]
+default = ["openai", "layers", "plugins"]
+
+# Schema generation support
+schema = ["schemars"]
+
+# Provider features
+openai = ["aidale-provider"]
+providers = ["aidale-provider"]
+
+# Layer features
+layers = ["aidale-layer"]
+
+# Plugin features
+plugins = ["aidale-plugin"]
+
+# Convenience features
+full = ["openai", "layers", "plugins"]
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["test-util", "macros"] }
+tracing-subscriber = { workspace = true }
+futures = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+schemars = { workspace = true }
+
+[[example]]
+name = "basic"
+required-features = ["openai", "layers", "plugins", "schema"]
+
+[[example]]
+name = "deepseek"
+required-features = ["openai", "layers", "plugins", "schema"]

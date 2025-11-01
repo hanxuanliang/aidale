@@ -1,0 +1,30 @@
+[package]
+name = "aidale-core"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+description = "Core abstractions and runtime for Aidale - Rust AI SDK"
+
+[dependencies]
+tokio = { workspace = true }
+async-trait = { workspace = true }
+futures = { workspace = true }
+pin-project = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+anyhow = { workspace = true }
+reqwest = { workspace = true }
+tracing = { workspace = true }
+arc-swap = { workspace = true }
+dashmap = { workspace = true }
+uuid = { workspace = true }
+async-stream = { workspace = true }
+tokio-stream = { workspace = true }
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["test-util"] }
+tracing-subscriber = { workspace = true }
