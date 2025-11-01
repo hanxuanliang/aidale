@@ -13,7 +13,7 @@ categories.workspace = true
 description = "Built-in plugins for Aidale (tool use, etc.)"
 
 [dependencies]
-aidale-core = { path = "../aidale-core" }
+aidale-core = { version = "0.1.0", path = "../aidale-core" }
 
 tokio = { workspace = true }
 async-trait = { workspace = true }

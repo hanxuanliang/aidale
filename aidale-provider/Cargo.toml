@@ -13,7 +13,7 @@ categories.workspace = true
 description = "AI provider implementations for Aidale (OpenAI, Anthropic, etc.)"
 
 [dependencies]
-aidale-core = { path = "../aidale-core" }
+aidale-core = { version = "0.1.0", path = "../aidale-core" }
 
 tokio = { workspace = true }
 async-trait = { workspace = true }
