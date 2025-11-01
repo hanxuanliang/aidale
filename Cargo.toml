@@ -14,7 +14,11 @@ edition = "2021"
 rust-version = "1.75"
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/hanxuanliang/aidale"
+homepage = "https://github.com/hanxuanliang/aidale"
+documentation = "https://docs.rs/aidale"
 authors = ["hanxuanliang"]
+keywords = ["ai", "llm", "openai", "sdk", "async"]
+categories = ["api-bindings", "asynchronous"]
 
 [workspace.dependencies]
 # Async runtime

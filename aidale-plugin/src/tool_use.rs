@@ -22,18 +22,21 @@ pub trait ToolExecutor: Send + Sync {
 }
 
 /// Simple function-based tool executor
+// Type alias to reduce complexity
+type ToolExecutorFn = Arc<
+    dyn Fn(
+            serde_json::Value,
+        ) -> std::pin::Pin<
+            Box<dyn std::future::Future<Output = Result<serde_json::Value, AiError>> + Send>,
+        > + Send
+        + Sync,
+>;
+
 pub struct FunctionTool {
     name: String,
     description: String,
     parameters: serde_json::Value,
-    executor: Arc<
-        dyn Fn(
-                serde_json::Value,
-            ) -> std::pin::Pin<
-                Box<dyn std::future::Future<Output = Result<serde_json::Value, AiError>> + Send>,
-            > + Send
-            + Sync,
-    >,
+    executor: ToolExecutorFn,
 }
 
 impl FunctionTool {
@@ -106,18 +109,18 @@ impl ToolRegistry {
     pub fn definitions(&self) -> Vec<Tool> {
         self.tools
             .iter()
-            .filter_map(|(name, tool)| {
+            .map(|(name, tool)| {
                 // If the tool is a FunctionTool, get its definition
                 // Otherwise, create a basic definition
                 if let Some(func_tool) = (tool as &dyn std::any::Any).downcast_ref::<FunctionTool>()
                 {
-                    Some(func_tool.definition())
+                    func_tool.definition()
                 } else {
-                    Some(Tool {
+                    Tool {
                         name: name.clone(),
                         description: format!("Tool: {}", name),
                         parameters: serde_json::json!({}),
-                    })
+                    }
                 }
             })
             .collect()

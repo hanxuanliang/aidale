@@ -235,8 +235,7 @@ impl RuntimeExecutor {
         };
 
         // Apply JSON output strategy
-        self.json_strategy
-            .apply(&mut chat_req, &params.schema)?;
+        self.json_strategy.apply(&mut chat_req, &params.schema)?;
 
         // Make the actual request
         let response = self.provider.chat_completion(chat_req).await?;

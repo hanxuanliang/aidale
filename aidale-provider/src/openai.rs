@@ -11,7 +11,8 @@ use async_openai::config::OpenAIConfig;
 use async_openai::types::{
     ChatCompletionRequestMessage, ChatCompletionRequestSystemMessageArgs,
     ChatCompletionRequestUserMessageArgs, CreateChatCompletionRequest,
-    CreateChatCompletionRequestArgs, CreateChatCompletionStreamResponse, ResponseFormat as OpenAIResponseFormat,
+    CreateChatCompletionRequestArgs, CreateChatCompletionStreamResponse,
+    ResponseFormat as OpenAIResponseFormat,
     ResponseFormatJsonSchema as OpenAIResponseFormatJsonSchema,
 };
 use async_openai::Client;
@@ -109,9 +110,7 @@ impl OpenAiProvider {
     }
 
     /// Convert our ResponseFormat to OpenAI's ResponseFormat
-    fn convert_response_format(
-        format: &ResponseFormat,
-    ) -> Result<OpenAIResponseFormat, AiError> {
+    fn convert_response_format(format: &ResponseFormat) -> Result<OpenAIResponseFormat, AiError> {
         match format {
             ResponseFormat::Text => Ok(OpenAIResponseFormat::Text),
             ResponseFormat::JsonObject => Ok(OpenAIResponseFormat::JsonObject),
@@ -136,8 +135,7 @@ impl OpenAiProvider {
         &self,
         req: &ChatCompletionRequest,
     ) -> Result<CreateChatCompletionRequest, AiError> {
-        let messages: Result<Vec<_>, _> =
-            req.messages.iter().map(Self::convert_message).collect();
+        let messages: Result<Vec<_>, _> = req.messages.iter().map(Self::convert_message).collect();
 
         let mut builder = CreateChatCompletionRequestArgs::default();
         builder.model(&req.model).messages(messages?);
@@ -195,8 +193,9 @@ impl OpenAiProvider {
                     name: None, // OpenAI doesn't return name in responses
                 };
 
-                let finish_reason = choice.finish_reason.map_or(FinishReason::Stop, |r| {
-                    match r {
+                let finish_reason = choice
+                    .finish_reason
+                    .map_or(FinishReason::Stop, |r| match r {
                         async_openai::types::FinishReason::Stop => FinishReason::Stop,
                         async_openai::types::FinishReason::Length => FinishReason::Length,
                         async_openai::types::FinishReason::ToolCalls => FinishReason::ToolCalls,
@@ -204,8 +203,7 @@ impl OpenAiProvider {
                             FinishReason::ContentFilter
                         }
                         _ => FinishReason::Other("unknown".to_string()),
-                    }
-                });
+                    });
 
                 Choice {
                     index: choice.index,
@@ -261,9 +259,7 @@ impl OpenAiProvider {
                     async_openai::types::FinishReason::Stop => FinishReason::Stop,
                     async_openai::types::FinishReason::Length => FinishReason::Length,
                     async_openai::types::FinishReason::ToolCalls => FinishReason::ToolCalls,
-                    async_openai::types::FinishReason::ContentFilter => {
-                        FinishReason::ContentFilter
-                    }
+                    async_openai::types::FinishReason::ContentFilter => FinishReason::ContentFilter,
                     _ => FinishReason::Other("unknown".to_string()),
                 });
 
@@ -327,7 +323,9 @@ impl Provider for OpenAiProvider {
         });
 
         Ok(Box::new(chat_stream)
-            as Box<dyn Stream<Item = Result<ChatCompletionChunk, AiError>> + Send + Unpin>)
+            as Box<
+                dyn Stream<Item = Result<ChatCompletionChunk, AiError>> + Send + Unpin,
+            >)
     }
 }
 

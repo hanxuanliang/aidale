@@ -153,12 +153,7 @@ impl JsonOutputStrategy for JsonModeStrategy {
             req.messages.insert(0, system_msg);
         } else {
             // Append to the last user message
-            if let Some(last_msg) = req
-                .messages
-                .iter_mut()
-                .rev()
-                .find(|m| m.role == Role::User)
-            {
+            if let Some(last_msg) = req.messages.iter_mut().rev().find(|m| m.role == Role::User) {
                 last_msg.content.push(ContentPart::Text {
                     text: format!("\n\n{}", instruction),
                 });
@@ -227,10 +222,7 @@ mod tests {
     #[test]
     fn test_json_mode_strategy() {
         let strategy = JsonModeStrategy::new();
-        let mut req = ChatCompletionRequest::new(
-            "test-model",
-            vec![Message::user("Hello")],
-        );
+        let mut req = ChatCompletionRequest::new("test-model", vec![Message::user("Hello")]);
         let schema = serde_json::json!({
             "type": "object",
             "properties": {

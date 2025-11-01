@@ -5,4 +5,6 @@
 
 pub mod json_output;
 
-pub use json_output::{detect_json_strategy, JsonModeStrategy, JsonOutputStrategy, JsonSchemaStrategy};
+pub use json_output::{
+    detect_json_strategy, JsonModeStrategy, JsonOutputStrategy, JsonSchemaStrategy,
+};

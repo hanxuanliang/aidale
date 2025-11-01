@@ -5,10 +5,12 @@ edition.workspace = true
 rust-version.workspace = true
 license.workspace = true
 repository.workspace = true
+homepage.workspace = true
+documentation.workspace = true
 authors.workspace = true
+keywords.workspace = true
+categories.workspace = true
 description = "Aidale - Elegant Rust AI SDK inspired by OpenDAL"
-keywords = ["ai", "llm", "openai", "sdk", "async"]
-categories = ["api-bindings", "asynchronous"]
 
 [dependencies]
 # Core is always included
